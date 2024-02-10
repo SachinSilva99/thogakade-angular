@@ -1,7 +1,6 @@
 package com.sachin.angularspringbootthogakade.api.api;
 
 import com.sachin.angularspringbootthogakade.api.dto.CustomerDTO;
-import com.sachin.angularspringbootthogakade.api.entity.Customer;
 import com.sachin.angularspringbootthogakade.api.service.customer.CustomerService;
 import com.sachin.angularspringbootthogakade.api.util.StandardResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,15 +10,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(value = "/api/v1/customers", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StandardResponse<String>> createCustomer(@RequestBody CustomerDTO customerDTO) {
         String customerId = customerService.createCustomer(customerDTO);
         StandardResponse<String> standardResponse = StandardResponse
@@ -31,7 +28,7 @@ public class CustomerController {
         return new ResponseEntity<>(standardResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{customerId}")
+    @PutMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StandardResponse<String>> updateCustomer(
             @RequestBody CustomerDTO customerDTO,
             @PathVariable String customerId) {
@@ -39,7 +36,7 @@ public class CustomerController {
         return new ResponseEntity<>(new StandardResponse<>(), HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/{customerId}")
+    @GetMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StandardResponse<CustomerDTO>> getCustomer(@PathVariable String customerId) {
         CustomerDTO customerDTO = customerService.getCustomer(customerId);
         StandardResponse<CustomerDTO> standardResponse = StandardResponse
@@ -57,9 +54,9 @@ public class CustomerController {
         return new ResponseEntity<>(new StandardResponse<>(), HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping()
-    public ResponseEntity<StandardResponse<Page<CustomerDTO>>> getAllCustomer() {
-        Page<CustomerDTO> customerPage = customerService.getAll();
+    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StandardResponse<Page<CustomerDTO>>> getAllCustomer(@RequestParam int pageSize, @RequestParam int pageNumber) {
+        Page<CustomerDTO> customerPage = customerService.getAll(pageNumber, pageSize);
         StandardResponse<Page<CustomerDTO>> standardResponse = StandardResponse
                 .<Page<CustomerDTO>>builder()
                 .statusCode(HttpStatus.OK.value())

@@ -18,6 +18,7 @@ import {ReactiveFormsModule} from "@angular/forms";
   ],
   exports: [
     InputComponent,
+    MainHeaderNavbarComponent,
 
   ],
   imports: [

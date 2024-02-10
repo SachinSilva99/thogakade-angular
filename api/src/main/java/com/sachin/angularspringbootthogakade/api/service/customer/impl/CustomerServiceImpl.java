@@ -1,17 +1,15 @@
 package com.sachin.angularspringbootthogakade.api.service.customer.impl;
 
-import com.sachin.angularspringbootthogakade.api.repo.CustomerRepo;
 import com.sachin.angularspringbootthogakade.api.dto.CustomerDTO;
 import com.sachin.angularspringbootthogakade.api.entity.Customer;
 import com.sachin.angularspringbootthogakade.api.exceptions.NotFoundException;
+import com.sachin.angularspringbootthogakade.api.repo.CustomerRepo;
 import com.sachin.angularspringbootthogakade.api.service.customer.CustomerService;
 import com.sachin.angularspringbootthogakade.api.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +31,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public Page<CustomerDTO> getAll() {
-        Page<Customer> allCustomers = customerRepo.findAll(PageRequest.of(0, 10));
+    public Page<CustomerDTO> getAll(int pageNumber, int pageSize) {
+        Page<Customer> allCustomers = customerRepo.findAllByIsDeletedFalse(PageRequest.of(pageNumber, pageSize));
         return allCustomers.map(mapper::toCustomerDto);
     }
 
@@ -55,8 +53,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     private Customer getCustomerById(String customerId) {
-        return customerRepo
+        Customer customer = customerRepo
                 .findById(customerId)
                 .orElseThrow(() -> new NotFoundException("customer Id:  " + customerId + " not found"));
+        if (customer.isDeleted()) {
+            throw new NotFoundException("customer Id:  " + customerId + " not found");
+        }
+        return customer;
     }
 }
