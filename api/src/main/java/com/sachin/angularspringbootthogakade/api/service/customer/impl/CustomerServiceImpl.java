@@ -1,12 +1,14 @@
 package com.sachin.angularspringbootthogakade.api.service.customer.impl;
 
-import com.sachin.angularspringbootthogakade.api.CustomerRepo;
+import com.sachin.angularspringbootthogakade.api.repo.CustomerRepo;
 import com.sachin.angularspringbootthogakade.api.dto.CustomerDTO;
 import com.sachin.angularspringbootthogakade.api.entity.Customer;
 import com.sachin.angularspringbootthogakade.api.exceptions.NotFoundException;
 import com.sachin.angularspringbootthogakade.api.service.customer.CustomerService;
 import com.sachin.angularspringbootthogakade.api.util.Mapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,9 +33,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public List<CustomerDTO> getAll() {
-        return customerRepo.findAll().stream().map(mapper::toCustomerDto).toList();
+    public Page<CustomerDTO> getAll() {
+        Page<Customer> allCustomers = customerRepo.findAll(PageRequest.of(0, 10));
+        return allCustomers.map(mapper::toCustomerDto);
     }
+
 
     @Override
     public void updateCustomer(String customerId, CustomerDTO customerDTO) {
@@ -49,6 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setDeleted(true);
         customerRepo.save(customer);
     }
+
     private Customer getCustomerById(String customerId) {
         return customerRepo
                 .findById(customerId)

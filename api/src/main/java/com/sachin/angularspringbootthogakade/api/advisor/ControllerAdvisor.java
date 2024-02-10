@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class ControllerAdvisor {
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<StandardResponse> handleConstraintViolationException(NotFoundException e) {
-        return new ResponseEntity<>(
-                new StandardResponse(
-                        HttpStatus.BAD_REQUEST.value(), e.getMessage(), null
-                ),
-                HttpStatus.BAD_REQUEST);
+    public ResponseEntity<StandardResponse<String>> handleConstraintViolationException(NotFoundException e) {
+        StandardResponse<String> standardResponse = StandardResponse.<String>builder()
+                .message(e.getMessage())
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .build();
+        return new ResponseEntity<>(standardResponse, HttpStatus.NOT_FOUND);
     }
 }
