@@ -8,6 +8,11 @@ import { OrdersContextComponent } from './components/orders-context/orders-conte
 import { PlaceOrderContextComponent } from './components/place-order-context/place-order-context.component';
 import { ItemsContextComponent } from './components/items-context/items-context.component';
 import { HomeContextComponent } from './components/home-context/home-context.component';
+import {MatInputModule} from '@angular/material/input';
+import {ShareModule} from "../share/share.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatTableModule} from "@angular/material/table";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -17,11 +22,17 @@ import { HomeContextComponent } from './components/home-context/home-context.com
     OrdersContextComponent,
     PlaceOrderContextComponent,
     ItemsContextComponent,
-    HomeContextComponent
+    HomeContextComponent,
+
   ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
+    MatInputModule,
+    ShareModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatButtonModule
   ]
 })
 export class MainModule { }
