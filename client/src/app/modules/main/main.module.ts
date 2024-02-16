@@ -13,6 +13,10 @@ import {ShareModule} from "../share/share.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatTableModule} from "@angular/material/table";
 import {MatButtonModule} from "@angular/material/button";
+import {MainHeaderNavbarComponent} from "../share/components/main-header-navbar/main-header-navbar.component";
+import {MatSelectModule} from "@angular/material/select";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -23,6 +27,7 @@ import {MatButtonModule} from "@angular/material/button";
     PlaceOrderContextComponent,
     ItemsContextComponent,
     HomeContextComponent,
+    MainHeaderNavbarComponent,
 
   ],
   imports: [
@@ -32,7 +37,10 @@ import {MatButtonModule} from "@angular/material/button";
     ShareModule,
     ReactiveFormsModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
+    MatPaginatorModule,
+    MatCardModule
   ]
 })
 export class MainModule { }

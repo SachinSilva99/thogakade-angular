@@ -1,1 +1,73 @@
-<p>place-order-context works!</p>
+<div class='px-4 md:px-8 lg:px-16 min-h-[90vh] bg-slate-50'>
+  <h1 class="pt-8 px-4">Place Order</h1>
+  <div>
+    <mat-form-field>
+      <mat-label>Customer Id</mat-label>
+      <mat-select>
+        <mat-option>C001</mat-option>
+        <mat-option>C002</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <form class="" >
+    <div class="flex gap-4 px-4 py-4 flex-col md:flex-row">
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Customer Id</mat-label>
+        <input  placeholder="C001" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Customer Name</mat-label>
+        <input placeholder="Enter your name..." matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Customer Address</mat-label>
+        <input  placeholder="Enter customer address"
+                matInput>
+      </mat-form-field>
+    </div>
+  </form>
+  <div>
+    <mat-form-field>
+      <mat-label>Item Id</mat-label>
+      <mat-select>
+        <mat-option>P001</mat-option>
+        <mat-option>P002</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <form class="" >
+    <div class="flex gap-4 px-4 py-4 flex-col md:flex-row">
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Customer Id</mat-label>
+        <input  placeholder="C001" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Customer Name</mat-label>
+        <input   placeholder="Enter your name..." matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Customer Address</mat-label>
+        <input  placeholder="Enter customer address"
+                matInput>
+      </mat-form-field>
+    </div>
+    <button  class="text-base my-4 px-6 py-3 bg-slate-600 text-white rounded-md hover:opacity-80 active:opacity-20">Add This Item</button>
+  </form>
+<!--  table here-->
+<!--  total-->
+  <div class="billing lg:w-3/12 md:w-6/12 sm:w-full w-full lg:m-4 md:m-4 sm:m-4">
+    <div class="flex justify-end billing ga[-4">
+      <h3>Total Rs : <span class="total">0</span></h3>
+      <h4>Order Id : <span id="orderIdLabel" class="order-id"></span></h4>
+      <div class="col-12">
+        <label for="cash" >Cash</label>
+        <input type="text" class="form-control" id="cash" placeholder="10000">
+      </div>
+      <div class="col-12">
+        <label for="discount" class="form-label">Discount</label>
+        <input type="text" class="form-control" id="discount" placeholder="20%">
+      </div>
+      <button id="place-orderbtn" class="btn btn-primary add-to-order">Place Order</button>
+    </div>
+  </div>
+</div>

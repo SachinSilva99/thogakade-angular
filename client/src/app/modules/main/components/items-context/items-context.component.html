@@ -1,1 +1,20 @@
-<p>items-context works!</p>
+<div class='px-4 md:px-8 lg:px-16 min-h-[90vh] bg-slate-50'>
+  <form class="">
+    <div class="flex gap-4 px-4 py-4 flex-col md:flex-row">
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Customer Id</mat-label>
+        <input placeholder="C001" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Customer Name</mat-label>
+        <input placeholder="Enter your name..." matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Customer Address</mat-label>
+        <input placeholder="Enter customer address"
+               matInput>
+      </mat-form-field>
+    </div>
+    <button mat-button color="primary" class="text-base mb-4">Add</button>
+  </form>
+</div>

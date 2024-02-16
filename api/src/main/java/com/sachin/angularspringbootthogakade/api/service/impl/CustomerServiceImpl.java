@@ -1,10 +1,10 @@
-package com.sachin.angularspringbootthogakade.api.service.customer.impl;
+package com.sachin.angularspringbootthogakade.api.service.impl;
 
 import com.sachin.angularspringbootthogakade.api.dto.CustomerDTO;
 import com.sachin.angularspringbootthogakade.api.entity.Customer;
 import com.sachin.angularspringbootthogakade.api.exceptions.NotFoundException;
 import com.sachin.angularspringbootthogakade.api.repo.CustomerRepo;
-import com.sachin.angularspringbootthogakade.api.service.customer.CustomerService;
+import com.sachin.angularspringbootthogakade.api.service.CustomerService;
 import com.sachin.angularspringbootthogakade.api.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,7 @@
 package com.sachin.angularspringbootthogakade.api.api;
 
 import com.sachin.angularspringbootthogakade.api.dto.CustomerDTO;
-import com.sachin.angularspringbootthogakade.api.service.customer.CustomerService;
+import com.sachin.angularspringbootthogakade.api.service.CustomerService;
 import com.sachin.angularspringbootthogakade.api.util.StandardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/v1/customers", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*",allowedHeaders="*")
+
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -54,7 +56,7 @@ public class CustomerController {
         return new ResponseEntity<>(new StandardResponse<>(), HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public ResponseEntity<StandardResponse<Page<CustomerDTO>>> getAllCustomer(@RequestParam int pageSize, @RequestParam int pageNumber) {
         Page<CustomerDTO> customerPage = customerService.getAll(pageNumber, pageSize);
         StandardResponse<Page<CustomerDTO>> standardResponse = StandardResponse

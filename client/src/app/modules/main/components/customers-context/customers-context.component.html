@@ -1,37 +1,56 @@
 <div class='px-4 md:px-8 lg:px-16 min-h-[90vh] bg-slate-50'>
-  <h1 class="">Customers</h1>
+  <h1 class="pt-8 px-4">Customers</h1>
   <form class="" [formGroup]="customerForm" (ngSubmit)="customerOnSubmit()">
-    <div class="flex gap-4 px-4 py-4">
+    <div class="flex gap-4 px-4 py-4 flex-col md:flex-row">
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Id</mat-label>
-        <input [value]="customer.customerId" formControlName="customerId" placeholder="C001" matInput>
+        <input readonly [value]="customer.id" formControlName="customerId" placeholder="C001" matInput>
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Name</mat-label>
-        <input [value]="customer.customerName" formControlName="customerName" placeholder="Enter your name..." matInput>
+        <input [value]="customer.name" formControlName="customerName" placeholder="Enter your name..." matInput>
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Address</mat-label>
-        <input [value]="customer.customerAddress" formControlName="customerAddress" placeholder="Enter customer address"
+        <input [value]="customer.address" formControlName="customerAddress" placeholder="Enter customer address"
                matInput>
       </mat-form-field>
     </div>
-    <button mat-button color="primary">{{ isTableRowSelected ? 'Update' : 'Add' }}</button>
+    <button class="bg-blue-500 px-6 py-3 text-white my-2">{{ isTableRowSelected ? 'Update' : 'Add' }}</button>
   </form>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="customerId">
-      <th mat-header-cell *matHeaderCellDef> customerId</th>
-      <td mat-cell *matCellDef="let element"> {{ element.customerId }}</td>
-    </ng-container>
-    <ng-container matColumnDef="customerName">
-      <th mat-header-cell *matHeaderCellDef> customerName</th>
-      <td mat-cell *matCellDef="let element"> {{ element.customerName }}</td>
-    </ng-container>
-    <ng-container matColumnDef="customerAddress">
-      <th mat-header-cell *matHeaderCellDef> customerAddress</th>
-      <td mat-cell *matCellDef="let element"> {{ element.customerAddress }}</td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr (click)="tblRowOnClick(row)" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+  <mat-card>
+    <mat-card-header>
+      <mat-form-field>
+        <input matInput (keyup)="Filterchange($event)" placeholder="Search a customer..." />
+      </mat-form-field>
+
+    </mat-card-header>
+    <mat-card-content>
+      <table matSort  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="Id">
+          <th mat-sort-header="Code" mat-header-cell *matHeaderCellDef> Id</th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ element.id }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Name">
+          <th mat-sort-header="Item" mat-header-cell *matHeaderCellDef> Name</th>
+          <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Address">
+          <th mat-sort-header mat-header-cell *matHeaderCellDef> Address</th>
+          <td mat-cell *matCellDef="let element">{{element.address}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
+
+      </table>
+
+    </mat-card-content>
+    <br>
+    <mat-card-footer>
+
+      <mat-paginator [pageSizeOptions]="[10,50,100]" (page)="handlePage($event)"></mat-paginator>
+
+    </mat-card-footer>
+  </mat-card>
+
 </div>

@@ -1,4 +1,4 @@
-package com.sachin.angularspringbootthogakade.api.service.customer;
+package com.sachin.angularspringbootthogakade.api.service;
 
 import com.sachin.angularspringbootthogakade.api.dto.CustomerDTO;
 import com.sachin.angularspringbootthogakade.api.entity.Customer;

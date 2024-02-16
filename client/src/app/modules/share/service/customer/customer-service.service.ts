@@ -1,51 +1,36 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {ApiPathService} from "../api-path/api-path.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerServiceService {
 
-  // constructor(private http: HttpClient) {
-  // }
-  // hostName:string=this.apiPathsService.baseUrl;
- /* // hostName:string='localhost';
-
-  public createNote(notes:any):Observable<any>{
-
-    // return this.http.post(this.hostName+"/note/create",notes);
-
+  constructor(private http: HttpClient, private apiPathService: ApiPathService) {
   }
 
-  public findNote(note_id: string): Observable<any> {
-    return this.http.get(this.hostName+'/note/' + note_id);
-  }
+  hostName: string = this.apiPathService.baseUrl + "customers";
 
-  updateNote(id:number,notes:any):Observable<any>{
 
-    return this.http.put(this.hostName+"/note/edit/"+id,notes);
-
-  }
-  public updateSpecialNoteDescription(note_id:number,note:any):Observable<any>{
-    console.log(note)
-    return this.http.put(this.hostName+"/note/updatebyname/"+note_id,{
-      noteDescription:note
-
-    });
+  public createCustomer(customer: any): Observable<any> {
+    return this.http.post(this.hostName,customer);
   }
 
 
-  deleteNote(noteId: number):Observable<any> {
-    console.log(noteId);
-    return this.http.delete(this.hostName+'/note/'+noteId);
+
+  updateCustomer(id: string, customer: any): Observable<any> {
+    return this.http.put(this.hostName + "/" + id, customer);
   }
 
-  findAll(): Observable<any> {
-    return this.http.get(this.hostName + '/note/all-active');
+
+  deleteCustomer(customerId: number): Observable<any> {
+    return this.http.delete(this.hostName + '/' + customerId);
   }
 
-  findList(searchText: string, page: number, size: number):Observable<any> {
-    return this.http.get(this.hostName+'/note/data-list?searchText='+searchText+'&page='+page+'&size='+size);
-  }*/
+  findAll(pageNumber:number, pageSize:number): Observable<any> {
+    return this.http.get(this.hostName + `?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  }
+
 }
