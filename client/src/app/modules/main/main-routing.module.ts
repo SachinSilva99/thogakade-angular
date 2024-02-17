@@ -5,15 +5,16 @@ import {CustomersContextComponent} from "./components/customers-context/customer
 import {HomeContextComponent} from "./components/home-context/home-context.component";
 import {ItemsContextComponent} from "./components/items-context/items-context.component";
 import {PlaceOrderContextComponent} from "./components/place-order-context/place-order-context.component";
+import {OrdersContextComponent} from "./components/orders-context/orders-context.component";
 
 const routes: Routes = [
   { path: '', component: MainComponent,children:[
       {path:'',redirectTo:'home',pathMatch:"full"},
       { path: 'home', component: HomeContextComponent },
       { path: 'customers', component: CustomersContextComponent },
+      { path: 'orders', component: OrdersContextComponent },
       { path: 'items', component: ItemsContextComponent },
       { path: 'placeorder', component: PlaceOrderContextComponent },
-
     ] },
 ];
 

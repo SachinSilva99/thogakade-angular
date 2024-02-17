@@ -62,6 +62,7 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
       const standardResponse = this.customerService.createCustomer(customer);
       const subscription = standardResponse.subscribe(value => console.log('value'));
       console.log(subscription);
+      this.loadData(10);
     }
   }
 
@@ -74,7 +75,7 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
     observable.subscribe((response) => {
       const customers: Customer[] = response.data.content;
       this.dataSource = new MatTableDataSource<Customer>(customers);
-    })
+    });
   }
 
   tblRowOnClick(element: any) {

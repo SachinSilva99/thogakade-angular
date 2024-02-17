@@ -1,7 +1,7 @@
 <div class='px-4 md:px-8 lg:px-16 min-h-[90vh] bg-slate-50'>
-  <h1 class="pt-8 px-4">Customers</h1>
+  <h1 class="pt-8 ">Customers</h1>
   <form class="" [formGroup]="customerForm" (ngSubmit)="customerOnSubmit()">
-    <div class="flex gap-4 px-4 py-4 flex-col md:flex-row">
+    <div class="flex gap-4  py-4 flex-col md:flex-row">
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Id</mat-label>
         <input readonly [value]="customer.id" formControlName="customerId" placeholder="C001" matInput>

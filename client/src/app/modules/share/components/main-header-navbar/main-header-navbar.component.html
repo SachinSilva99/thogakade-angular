@@ -1,4 +1,5 @@
-<nav class="bg-gray-500 flex md:flex-col lg:flex-row justify-between items-center py-2 px-6 text-white">
+<nav
+  class="bg-slate-600 px-4 md:px-8 lg:px-16 flex md:flex-col lg:flex-row justify-between items-center py-2  text-white">
   <h1>ThogaKade</h1>
   <div>
     <div class="flex flex-row items-center lg:hidden">
@@ -11,13 +12,22 @@
     </div>
     <div [ngClass]="{'hidden': !isNavbarOpen, 'block': isNavbarOpen}" class="lg:block">
       <ul class="flex flex-col md:flex-row gap-4">
-        <li class="cursor-pointer">Home</li>
-        <li class="cursor-pointer">Orders</li>
-        <li class="cursor-pointer">Customers</li>
-        <li class="cursor-pointer">Items</li>
-        <li class="cursor-pointer">Place Order</li>
+        <a [routerLink]="['/main/customers']">
+          <li class="cursor-pointer">Customers</li>
+        </a>
+        <a [routerLink]="['/main/home']">
+          <li class="cursor-pointer">Home</li>
+        </a>
+        <a [routerLink]="['/main/orders']">
+          <li class="cursor-pointer">Orders</li>
+        </a>
+        <a [routerLink]="['/main/items']">
+          <li class="cursor-pointer">Items</li>
+        </a>
+        <a [routerLink]="['/main/placeorder']">
+          <li class="cursor-pointer">Place Order</li>
+        </a>
       </ul>
     </div>
   </div>
-
 </nav>

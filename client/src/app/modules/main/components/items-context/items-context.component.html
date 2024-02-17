@@ -1,20 +1,27 @@
 <div class='px-4 md:px-8 lg:px-16 min-h-[90vh] bg-slate-50'>
-  <form class="">
-    <div class="flex gap-4 px-4 py-4 flex-col md:flex-row">
+  <h1 class="pt-8">Items</h1>
+  <form class="" [formGroup]="itemForm" (ngSubmit)="itemOnSubmit()">
+    <div class="flex gap-4 py-4 flex-col md:flex-row">
       <mat-form-field appearance="fill" class="w-96">
-        <mat-label>Customer Id</mat-label>
-        <input placeholder="C001" matInput>
+        <mat-label>Id</mat-label>
+        <input [value]="itemForm.value.id" readonly formControlName="id"  matInput>
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
-        <mat-label>Customer Name</mat-label>
-        <input placeholder="Enter your name..." matInput>
+        <mat-label>Description</mat-label>
+        <input [value]="itemForm.value.description" placeholder="Enter description..." formControlName="description" matInput>
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
-        <mat-label>Customer Address</mat-label>
-        <input placeholder="Enter customer address"
+        <mat-label>Quantity</mat-label>
+        <input [value]="itemForm.value.qty"  placeholder="Enter quantity" formControlName="qty"
+               matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Price</mat-label>
+        <input [value]="itemForm.value.price"  placeholder="Enter price" formControlName="price"
                matInput>
       </mat-form-field>
     </div>
-    <button mat-button color="primary" class="text-base mb-4">Add</button>
+    <button class="bg-blue-500 px-6 py-3 text-white my-2 hover:opacity-70 rounded-md">Add Item</button>
   </form>
+
 </div>
