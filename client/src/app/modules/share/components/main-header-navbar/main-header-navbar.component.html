@@ -1,6 +1,6 @@
 <nav
   class="bg-slate-600 px-4 md:px-8 lg:px-16 flex md:flex-col lg:flex-row justify-between items-center py-2  text-white">
-  <h1>ThogaKade</h1>
+  <h1 class="py-2">ThogaKade</h1>
   <div>
     <div class="flex flex-row items-center lg:hidden">
       <button class="text-white focus:outline-none" (click)="toggleNavbar()">
@@ -12,11 +12,11 @@
     </div>
     <div [ngClass]="{'hidden': !isNavbarOpen, 'block': isNavbarOpen}" class="lg:block">
       <ul class="flex flex-col md:flex-row gap-4">
-        <a [routerLink]="['/main/customers']">
-          <li class="cursor-pointer">Customers</li>
-        </a>
         <a [routerLink]="['/main/home']">
           <li class="cursor-pointer">Home</li>
+        </a>
+        <a [routerLink]="['/main/customers']">
+          <li class="cursor-pointer">Customers</li>
         </a>
         <a [routerLink]="['/main/orders']">
           <li class="cursor-pointer">Orders</li>

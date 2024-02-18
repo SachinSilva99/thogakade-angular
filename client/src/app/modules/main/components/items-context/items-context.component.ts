@@ -1,16 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {ItemsService} from "../../../share/service/item/items.service";
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-items-context',
   templateUrl: './items-context.component.html',
   styleUrls: ['./items-context.component.scss']
 })
-export class ItemsContextComponent implements OnInit{
-  constructor(private itemService : ItemsService) {
+export class ItemsContextComponent implements OnInit {
+  constructor(private itemService: ItemsService) {
   }
-  itemForm: FormGroup = new FormGroup({
+
+  itemForm = new FormGroup({
     id: new FormControl(''),
     description: new FormControl(''),
     qty: new FormControl(0),
@@ -20,8 +22,25 @@ export class ItemsContextComponent implements OnInit{
   ngOnInit() {
     this.loadData(10);
   }
+
   itemOnSubmit() {
-    console.log(this.itemForm);
+    if (this.itemForm.valid) {
+      const {description, price, qty} = this.itemForm.value;
+      const item = {description, price, qty};
+      console.log(item);
+      this.itemService.createItem(item).subscribe(res => {
+        if (res.statusCode === 201) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Item added successfully",
+            text: `Item Id : ${res.data}`,
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      })
+    }
   }
 
 

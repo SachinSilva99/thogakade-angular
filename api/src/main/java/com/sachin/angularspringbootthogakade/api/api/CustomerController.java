@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/v1/customers", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*",allowedHeaders="*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 
 public class CustomerController {
     private final CustomerService customerService;

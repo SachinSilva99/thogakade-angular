@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CustomerServiceService} from "../../../share/service/customer/customer-service.service";
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
@@ -24,8 +24,6 @@ export interface PeriodicElement {
 })
 export class CustomersContextComponent implements AfterViewInit, OnInit {
 
-  customer: Customer = {address: "", id: "", name: ""}
-  isTableRowSelected = false;
   dataSource: MatTableDataSource<Customer>;
   itemAddonsList: Customer[] = [];
 
@@ -40,15 +38,14 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
 
 
   constructor(private customerService: CustomerServiceService) {
-    console.log(this.isTableRowSelected);
     this.dataSource = new MatTableDataSource<Customer>(this.itemAddonsList);
   }
 
 
   customerForm = new FormGroup({
-    customerId: new FormControl(this.customer.id),
-    customerName: new FormControl(this.customer.name, Validators.required),
-    customerAddress: new FormControl(this.customer.address, Validators.required),
+    customerId: new FormControl(''),
+    customerName: new FormControl('', Validators.required),
+    customerAddress: new FormControl('', Validators.required),
   });
 
   displayedColumns = ['Id', 'Name', 'Address'];
@@ -57,7 +54,6 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
 
     console.log(this.customerForm);
     if (this.customerForm.valid) {
-      this.isTableRowSelected = false;
       const customer = {name: this.customerForm.value.customerName, address: this.customerForm.value.customerAddress};
       const standardResponse = this.customerService.createCustomer(customer);
       const subscription = standardResponse.subscribe(value => console.log('value'));
@@ -79,15 +75,9 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
   }
 
   tblRowOnClick(element: any) {
-    console.log(this.isTableRowSelected)
-    this.isTableRowSelected = true;
-    const customer: Customer = {
-      name: element.customerName,
-      id: element.customerId,
-      address: element.customerAddress
-    }
-    this.customer = customer;
-    console.log(this.isTableRowSelected)
+    this.customerForm.value.customerId = element.id;
+    this.customerForm.value.customerName = element.name;
+    this.customerForm.value.customerAddress = element.address;
   }
 
   Filterchange(event: Event) {
@@ -98,5 +88,9 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
   handlePage(event: PageEvent) {
     const selectedPageSize = event.pageSize;
     this.loadData(selectedPageSize);
+  }
+
+  btnResetOnClick() {
+    this.customerForm.reset();
   }
 }

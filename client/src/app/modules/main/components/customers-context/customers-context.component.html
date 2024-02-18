@@ -4,53 +4,48 @@
     <div class="flex gap-4  py-4 flex-col md:flex-row">
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Id</mat-label>
-        <input readonly [value]="customer.id" formControlName="customerId" placeholder="C001" matInput>
+        <input readonly [value]="customerForm.value.customerId" formControlName="customerId" placeholder="READ ONLY" matInput>
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Name</mat-label>
-        <input [value]="customer.name" formControlName="customerName" placeholder="Enter your name..." matInput>
+        <input [value]="customerForm.value.customerName" formControlName="customerName" placeholder="Enter your name..." matInput>
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Address</mat-label>
-        <input [value]="customer.address" formControlName="customerAddress" placeholder="Enter customer address"
+        <input [value]="customerForm.value.customerAddress" formControlName="customerAddress" placeholder="Enter customer address"
                matInput>
       </mat-form-field>
     </div>
-    <button class="bg-blue-500 px-6 py-3 text-white my-2">{{ isTableRowSelected ? 'Update' : 'Add' }}</button>
+    <button class="bg-blue-500 px-6 py-3 text-white my-2 rounded-md">{{ customerForm.value.customerId ? 'Update' : 'Add' }}</button>
   </form>
+  <button class="bg-slate-400 px-6 py-3 text-white my-2 rounded-md" (click)="btnResetOnClick()">Reset fields</button>
   <mat-card>
     <mat-card-header>
       <mat-form-field>
-        <input matInput (keyup)="Filterchange($event)" placeholder="Search a customer..." />
+        <input matInput (keyup)="Filterchange($event)" placeholder="Search a customer..."/>
       </mat-form-field>
-
     </mat-card-header>
     <mat-card-content>
-      <table matSort  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="Id">
           <th mat-sort-header="Code" mat-header-cell *matHeaderCellDef> Id</th>
-          <td mat-cell *matCellDef="let element; let i = index">{{ element.id }}</td>
+          <td class="cursor-pointer" (click)="tblRowOnClick(element) "mat-cell *matCellDef="let element; let i = index">{{ element.id }}</td>
         </ng-container>
         <ng-container matColumnDef="Name">
           <th mat-sort-header="Item" mat-header-cell *matHeaderCellDef> Name</th>
-          <td mat-cell *matCellDef="let element">{{element.name}}</td>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
         </ng-container>
         <ng-container matColumnDef="Address">
           <th mat-sort-header mat-header-cell *matHeaderCellDef> Address</th>
-          <td mat-cell *matCellDef="let element">{{element.address}}</td>
+          <td mat-cell *matCellDef="let element">{{ element.address }}</td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
-
+        <tr  mat-row *matRowDef="let row;columns:displayedColumns"></tr>
       </table>
-
     </mat-card-content>
     <br>
     <mat-card-footer>
-
       <mat-paginator [pageSizeOptions]="[10,50,100]" (page)="handlePage($event)"></mat-paginator>
-
     </mat-card-footer>
   </mat-card>
-
 </div>
