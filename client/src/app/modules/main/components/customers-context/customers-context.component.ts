@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CustomerServiceService} from "../../../share/service/customer/customer-service.service";
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import Swal from "sweetalert2";
 
 interface Customer {
   id: string;
@@ -10,12 +11,6 @@ interface Customer {
   address: string;
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
 @Component({
   selector: 'app-customers-context',
@@ -32,6 +27,7 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
   ngOnInit() {
     this.loadData(10);
   }
@@ -51,22 +47,55 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
   displayedColumns = ['Id', 'Name', 'Address'];
 
   customerOnSubmit() {
-
-    console.log(this.customerForm);
     if (this.customerForm.valid) {
-      const customer = {name: this.customerForm.value.customerName, address: this.customerForm.value.customerAddress};
-      const standardResponse = this.customerService.createCustomer(customer);
-      const subscription = standardResponse.subscribe(value => console.log('value'));
-      console.log(subscription);
-      this.loadData(10);
+      const {customerId, customerName, customerAddress} = this.customerForm.value;
+      const customer: Customer = {
+        name: customerName as string,
+        address: customerAddress as string,
+        id: customerId as string
+      };
+      if (customerId) {
+        this.updateCustomer(customer);
+      } else {
+        this.createCustomer(customer);
+      }
+
     }
   }
 
-  updateOnClick() {
-
+  private createCustomer(customer: Customer) {
+    const standardResponse = this.customerService.createCustomer(customer);
+    standardResponse.subscribe(res => {
+      if (res.statusCode === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Customer added successfully",
+          text: `Customer Id : ${res.data}`,
+          showConfirmButton: false,
+          timer: 2000
+        });
+        this.loadData(10);
+      }
+    });
   }
 
-  private loadData(pageSize:number) {
+  private updateCustomer(customer: Customer) {
+    const observable = this.customerService.updateCustomer(customer.id, customer);
+    observable.subscribe(res=>{
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Customer updated successfully",
+        showConfirmButton: false,
+        timer: 2000
+      });
+      this.loadData(10);
+    });
+  }
+
+
+  private loadData(pageSize: number) {
     const observable = this.customerService.findAll(0, pageSize);
     observable.subscribe((response) => {
       const customers: Customer[] = response.data.content;
@@ -75,9 +104,11 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
   }
 
   tblRowOnClick(element: any) {
-    this.customerForm.value.customerId = element.id;
-    this.customerForm.value.customerName = element.name;
-    this.customerForm.value.customerAddress = element.address;
+    this.customerForm.patchValue({
+      customerId: element.id,
+      customerName: element.name,
+      customerAddress: element.address
+    });
   }
 
   Filterchange(event: Event) {
