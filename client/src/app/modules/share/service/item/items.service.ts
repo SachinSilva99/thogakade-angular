@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ApiPathService} from "../api-path/api-path.service";
 import {Observable} from "rxjs";
@@ -16,9 +16,8 @@ export class ItemsService {
 
 
   public createItem(item: any): Observable<any> {
-    return this.http.post(this.hostName,item);
+    return this.http.post(this.hostName, item);
   }
-
 
 
   updateItem(id: string, item: any): Observable<any> {
@@ -26,11 +25,15 @@ export class ItemsService {
   }
 
 
-  deleteItem(itemId: number): Observable<any> {
+  deleteItem(itemId: string): Observable<any> {
     return this.http.delete(this.hostName + '/' + itemId);
   }
 
-  findAll(pageNumber:number, pageSize:number): Observable<any> {
+  getItem(itemId: string): Observable<any> {
+    return this.http.get(this.hostName + '/' + itemId);
+  }
+
+  findAll(pageNumber: number, pageSize: number): Observable<any> {
     return this.http.get(this.hostName + `?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 }

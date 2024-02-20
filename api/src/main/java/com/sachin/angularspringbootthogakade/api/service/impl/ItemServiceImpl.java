@@ -39,7 +39,7 @@ public class ItemServiceImpl implements ItemService {
     public void updateItem(String itemId, ItemDTO itemDTO) {
         Item item = getItemById(itemId);
         item.setDescription(itemDTO.getDescription());
-        item.setQty(item.getQty());
+        item.setQty(itemDTO.getQty());
         item.setPrice(itemDTO.getPrice());
         itemRepo.save(item);
     }

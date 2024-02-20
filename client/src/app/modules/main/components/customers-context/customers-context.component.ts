@@ -5,7 +5,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import Swal from "sweetalert2";
 
-interface Customer {
+export interface Customer {
   id: string;
   name: string;
   address: string;
@@ -18,7 +18,7 @@ interface Customer {
   styleUrls: ['./customers-context.component.scss']
 })
 export class CustomersContextComponent implements AfterViewInit, OnInit {
-
+  private currentPage = 0;
   dataSource: MatTableDataSource<Customer>;
   itemAddonsList: Customer[] = [];
 
@@ -29,7 +29,7 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.loadData(10);
+    this.loadData(100,0);
   }
 
 
@@ -44,7 +44,7 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
     customerAddress: new FormControl('', Validators.required),
   });
 
-  displayedColumns = ['Id', 'Name', 'Address'];
+  displayedColumns = ['Id', 'Name', 'Address', 'Actions'];
 
   customerOnSubmit() {
     if (this.customerForm.valid) {
@@ -60,6 +60,14 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
         this.createCustomer(customer);
       }
 
+    }else {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Fields cannot be empty",
+        showConfirmButton: false,
+        timer: 2000
+      });
     }
   }
 
@@ -75,14 +83,15 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
           showConfirmButton: false,
           timer: 2000
         });
-        this.loadData(10);
+        this.loadData(10,0);
+        this.customerForm.reset();
       }
     });
   }
 
   private updateCustomer(customer: Customer) {
     const observable = this.customerService.updateCustomer(customer.id, customer);
-    observable.subscribe(res=>{
+    observable.subscribe(res => {
       Swal.fire({
         position: "center",
         icon: "success",
@@ -90,17 +99,25 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
         showConfirmButton: false,
         timer: 2000
       });
-      this.loadData(10);
+      this.loadData(10,0);
+      this.customerForm.reset();
     });
   }
 
 
-  private loadData(pageSize: number) {
-    const observable = this.customerService.findAll(0, pageSize);
+  private loadData(pageSize: number, pageNumber:number) {
+    console.log("Requested Page Size:", pageSize);
+    console.log("Requested Page Number:", pageNumber);
+    const observable = this.customerService.findAll(pageNumber, pageSize);
     observable.subscribe((response) => {
       const customers: Customer[] = response.data.content;
       this.dataSource = new MatTableDataSource<Customer>(customers);
+      this.dataSource.paginator = this.paginator;
+      this.paginator.length = response.data.totalElements;
+      this.paginator.pageSize = response.data.size;
+      this.paginator.pageIndex = response.data.number;
     });
+
   }
 
   tblRowOnClick(element: any) {
@@ -118,10 +135,36 @@ export class CustomersContextComponent implements AfterViewInit, OnInit {
 
   handlePage(event: PageEvent) {
     const selectedPageSize = event.pageSize;
-    this.loadData(selectedPageSize);
+    const selectedPageNumber = event.pageIndex;
+    console.log("Requested Page Size:", selectedPageSize);
+    console.log("Requested Page Number:", selectedPageNumber);
+    this.currentPage = selectedPageNumber;
+    this.loadData(selectedPageSize, selectedPageNumber);
   }
 
   btnResetOnClick() {
     this.customerForm.reset();
+  }
+
+  deleteCustomer(element: Customer) {
+    Swal.fire({
+      title: `
+          <p>
+                 Are you sure you want to delete
+                    Id : ${element.id}
+                   Name : ${element.name}
+          </p>`,
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const observable = this.customerService.deleteCustomer(element.id);
+        observable.subscribe(() => {
+          Swal.fire("Deleted!", "", "success");
+          this.loadData(10,0);
+        });
+      }
+    });
   }
 }

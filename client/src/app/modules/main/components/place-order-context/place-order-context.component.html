@@ -3,71 +3,76 @@
   <div>
     <mat-form-field>
       <mat-label>Customer Id</mat-label>
-      <mat-select>
-        <mat-option>C001</mat-option>
-        <mat-option>C002</mat-option>
+      <mat-select [(ngModel)]="selectedCustomerId" (selectionChange)="onCustomerIdSelected()">
+        <mat-option *ngFor="let customerId of customerIds" [value]="customerId">{{ customerId }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <form class="" >
+  <form [formGroup]="customerForm">
     <div class="flex gap-4 px-4 py-4 flex-col md:flex-row">
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Id</mat-label>
-        <input  placeholder="C001" matInput>
+        <input placeholder="C001" matInput formControlName="customerId">
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Name</mat-label>
-        <input placeholder="Enter your name..." matInput>
+        <input placeholder="Enter your name..." matInput formControlName="customerName">
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
         <mat-label>Customer Address</mat-label>
-        <input  placeholder="Enter customer address"
-                matInput>
+        <input placeholder="Enter customer address" matInput formControlName="customerAddress">
       </mat-form-field>
     </div>
   </form>
   <div>
     <mat-form-field>
       <mat-label>Item Id</mat-label>
-      <mat-select>
-        <mat-option>P001</mat-option>
-        <mat-option>P002</mat-option>
+      <mat-select [(ngModel)]="selectedItemId" (selectionChange)="onItemSelected()">
+        <mat-option *ngFor="let itemId of itemIds" [value]="itemId">{{ itemId }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <form class="" >
-    <div class="flex gap-4 px-4 py-4 flex-col md:flex-row">
+  <form [formGroup]="itemForm" (ngSubmit)="itemOnAdd()">
+    <div class="flex gap-4 py-4 flex-col md:flex-row">
       <mat-form-field appearance="fill" class="w-96">
-        <mat-label>Customer Id</mat-label>
-        <input  placeholder="C001" matInput>
+        <mat-label>Id</mat-label>
+        <input [value]="itemForm.value.id" readonly formControlName="id" matInput>
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
-        <mat-label>Customer Name</mat-label>
-        <input   placeholder="Enter your name..." matInput>
+        <mat-label>Description</mat-label>
+        <input [value]="itemForm.value.description" placeholder="Enter description..." formControlName="description" matInput>
       </mat-form-field>
       <mat-form-field appearance="fill" class="w-96">
-        <mat-label>Customer Address</mat-label>
-        <input  placeholder="Enter customer address"
-                matInput>
+        <mat-label>Quantity</mat-label>
+        <input [value]="itemForm.value.qty" placeholder="" formControlName="qty" type="number" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Price</mat-label>
+        <input [value]="itemForm.value.price" placeholder="" formControlName="price" type="number" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Qty Need</mat-label>
+        <input [value]="itemForm.value.qtyNeed" placeholder="Enter Qty Needed" formControlName="qtyNeed" type="number" matInput>
       </mat-form-field>
     </div>
-    <button  class="text-base my-4 px-6 py-3 bg-slate-600 text-white rounded-md hover:opacity-80 active:opacity-20">Add This Item</button>
+    <button class="bg-blue-500 px-6 py-3 text-white my-2 hover:opacity-70 rounded-md">
+      Add this Item
+    </button>
   </form>
-<!--  table here-->
-<!--  total-->
+  <!--  table here-->
+  <!--  total-->
   <div class="billing lg:w-3/12 md:w-6/12 sm:w-full w-full lg:m-4 md:m-4 sm:m-4">
-    <div class="flex justify-end billing ga[-4">
+    <form class="flex flex-col justify-end billing">
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Cash</mat-label>
+        <input placeholder="Enter cash amount"  type="number" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-96">
+        <mat-label>Discount</mat-label>
+        <input placeholder="Enter discount"  type="number" min="0" max="100" matInput>
+      </mat-form-field>
       <h3>Total Rs : <span class="total">0</span></h3>
-      <h4>Order Id : <span id="orderIdLabel" class="order-id"></span></h4>
-      <div class="col-12">
-        <label for="cash" >Cash</label>
-        <input type="text" class="form-control" id="cash" placeholder="10000">
-      </div>
-      <div class="col-12">
-        <label for="discount" class="form-label">Discount</label>
-        <input type="text" class="form-control" id="discount" placeholder="20%">
-      </div>
-      <button id="place-orderbtn" class="btn btn-primary add-to-order">Place Order</button>
-    </div>
+      <button id="place-orderbtn" class="bg-slate-500 px-6 py-3 add-to-order text-white rounded-md">Place Order</button>
+    </form>
   </div>
 </div>

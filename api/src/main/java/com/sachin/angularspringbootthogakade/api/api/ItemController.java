@@ -36,7 +36,7 @@ public class ItemController {
         return new ResponseEntity<>(new StandardResponse<>(), HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "/{itemId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{itemId}")
     public ResponseEntity<StandardResponse<ItemDTO>> getCustomer(@PathVariable String itemId) {
         ItemDTO itemDTO = itemService.getItem(itemId);
         StandardResponse<ItemDTO> standardResponse = StandardResponse

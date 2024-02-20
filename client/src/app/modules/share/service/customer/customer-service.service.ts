@@ -25,8 +25,11 @@ export class CustomerServiceService {
   }
 
 
-  deleteCustomer(customerId: number): Observable<any> {
+  deleteCustomer(customerId: string): Observable<any> {
     return this.http.delete(this.hostName + '/' + customerId);
+  }
+  getCustomer(customerId: string): Observable<any> {
+    return this.http.get(this.hostName + '/' + customerId);
   }
 
   findAll(pageNumber:number, pageSize:number): Observable<any> {

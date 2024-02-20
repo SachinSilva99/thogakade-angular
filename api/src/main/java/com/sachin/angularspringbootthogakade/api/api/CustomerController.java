@@ -38,7 +38,7 @@ public class CustomerController {
         return new ResponseEntity<>(new StandardResponse<>(), HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "/{customerId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{customerId}")
     public ResponseEntity<StandardResponse<CustomerDTO>> getCustomer(@PathVariable String customerId) {
         CustomerDTO customerDTO = customerService.getCustomer(customerId);
         StandardResponse<CustomerDTO> standardResponse = StandardResponse

@@ -10,13 +10,14 @@ import { ItemsContextComponent } from './components/items-context/items-context.
 import { HomeContextComponent } from './components/home-context/home-context.component';
 import {MatInputModule} from '@angular/material/input';
 import {ShareModule} from "../share/share.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableModule} from "@angular/material/table";
 import {MatButtonModule} from "@angular/material/button";
 import {MainHeaderNavbarComponent} from "../share/components/main-header-navbar/main-header-navbar.component";
 import {MatSelectModule} from "@angular/material/select";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -40,7 +41,9 @@ import {MatCardModule} from "@angular/material/card";
     MatButtonModule,
     MatSelectModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule,
+    FormsModule
   ]
 })
 export class MainModule { }
